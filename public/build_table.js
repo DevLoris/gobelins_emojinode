@@ -55,8 +55,7 @@ function buildTables() {
     build('.leaderboard-emoji', data_emoji_use);
 }
 
-
-
+//Actions by the WS
 function displayContinue(list) {
     if(list != null && list.length >= 1) {
         for(emoji in list){
@@ -65,12 +64,10 @@ function displayContinue(list) {
         emoji_dom_last.innerText = list[0];
     }
 }
-
 function displayName(username) {
     if(username != null)
         emoji_dom_name.innerText ="@"+ (username);
 }
-
 function doStat(username, list) {
     if(username != null) {
         if(data_user_use[username] !== undefined)
@@ -89,3 +86,10 @@ function doStat(username, list) {
     }
     buildTables();
 }
+
+//Menu
+var menu_open = document.querySelector('.open-menu');
+menu_open.addEventListener('click', function (e) {
+    document.querySelector('.panel').classList.toggle('closed');
+    document.querySelector('.content').classList.toggle('leaderboard-opened');
+});

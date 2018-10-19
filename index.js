@@ -17,9 +17,12 @@ const wss = new WebSocket.Server({ server });
 
 //Server
 server.on("request", (request, response) => {
-    if(request.url.endsWith(".js") || request.url.endsWith(".css")) {
-        const fileSrc = fs.createReadStream("./public" + request.url);
-        fileSrc.pipe(response);
+    console.log(request.url);
+    if(request.url.endsWith(".js") || request.url.endsWith(".css")|| request.url.endsWith(".svg") ) {
+        if(fs.existsSync("./public" + request.url)) {
+            const fileSrc = fs.createReadStream("./public" + request.url);
+            fileSrc.pipe(response);
+        }
     }
     else {
         const fileSrc = fs.createReadStream("./public/index.html");
@@ -47,4 +50,4 @@ wss.on("connection", ws => {
     s.pipe(socketStr);
 });
 
-s.pipe((new AnalyseStream()));
+//s.pipe((new AnalyseStream()));
