@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <script>
+        var socket = new WebSocket('ws://localhost:5000');
+        socket.addEventListener('open', function (event) {
+            console.log("connected", event);
+        });
+        socket.addEventListener('message', function (event) {
+            var parse = JSON.parse(event.data);
+            build(parse.emojis);
+            displayContinue(parse.new_emojis);
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Most Used Emojis in France</h1>
+    <div class="emoji-list-continue">
+
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Emoji</th>
+            <th>Uses</th>
+        </tr>
+        </thead>
+        <tbody class="list-emojis">
+        </tbody>
+    </table>
+</body>
+
+<script src="build_table.js"></script>
+</html>
