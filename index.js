@@ -4,22 +4,21 @@ const fs = require("fs");
 
 const TwitterStream = require('./stream/twitter_stream');
 const SocketStream = require('./stream/socket_stream');
+const AnalyseStream = require('./stream/analyse_stream');
 
 const twitterClient = require('./twitter_client');
 const { Transform } = require('stream');
 
-const emojis_const = require('./analysis/emojis_const');
 const emojis = require('./analysis/emoji_stock');
 emojis.init();
 
 const server = http.createServer();
 const wss = new WebSocket.Server({ server });
-let ws_connection = null;
 
 //Server
 server.on("request", (request, response) => {
-    if(request.url == "/build_table.js") {
-        const fileSrc = fs.createReadStream("./public/build_table.js");
+    if(request.url.endsWith(".js") || request.url.endsWith(".css")) {
+        const fileSrc = fs.createReadStream("./public" + request.url);
         fileSrc.pipe(response);
     }
     else {
@@ -29,34 +28,23 @@ server.on("request", (request, response) => {
 });
 server.listen(5000);
 
-
 const stream  = new TwitterStream(twitterClient);
 
 
-const stringify = new Transform({
-    writableObjectMode: true,
-    transform(chunk, encoding, callback) {
-        const newChunk = chunk.toString() + '\n';
-        this.push(newChunk);
-        callback();
-    }
-});
-
-stream.track({track: emojis_const.join(','), language: "fr"});
+//stream.track({track: emojis_const.join(','), language: "fr"});
+//stream.track({track: "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,."});
+stream.track({track: "."});
 const analyse =  require('./stream/transform_analyse');
+
+let s = stream.pipe(analyse);
 
 //Websockets
 wss.on("connection", ws => {
     console.log("connection", ws);
 
-    ws.on("message", message => {
-        console.log("message from client: ", message);
-    });
-
     const socketStr = new SocketStream(ws);
-    //process.stdin.pipe(socketStr);
-    stream.pipe(analyse).pipe(socketStr);
+
+    s.pipe(socketStr);
 });
 
-
-
+s.pipe((new AnalyseStream()));

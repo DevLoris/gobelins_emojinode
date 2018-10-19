@@ -1,0 +1,71 @@
+
+@import url('https://fonts.googleapis.com/css?family=Niramit:400,700');
+
+body {
+    background: #0045E5;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    position: relative;
+    font-family: 'Niramit', sans-serif;
+    flex-direction: column;
+    color: white;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+.emoji-last {
+    font-size: 150px;
+    line-height: 240px;
+    height: 240px;
+}
+
+.emoji-list-continue {
+    position: absolute;
+    line-break: unset;
+    text-wrap: none;
+    white-space: nowrap;
+    text-align: left;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.panel {
+    background: white;
+    color: #0045E5;
+    height: 100%;
+    position: fixed;
+    width: 350px;
+    left:0;
+    overflow: auto;
+    z-index: 2;
+}
+
+.panel h2 {
+    padding: 10px 30px;
+    font-size: 30px;
+}
+
+.panel h3 {
+    padding: 10px 30px;
+    font-size: 20px;
+}
+.panel table  {
+    color: rgba(0, 69, 229, 0.66);
+    margin: 0 30px;
+    width: 100%;
+    width: calc(100% - 60px);
+    margin-bottom: 40px;
+}
+.panel table th,.panel table td {
+    width: 50%;
+    text-align: left;
+}
+.panel table th {
+    font-size: 1.1em;
+}

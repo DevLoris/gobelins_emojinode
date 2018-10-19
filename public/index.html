@@ -1,34 +1,42 @@
 <html>
-
 <head>
-    <script>
-        var socket = new WebSocket('ws://localhost:5000');
-        socket.addEventListener('open', function (event) {
-            console.log("connected", event);
-        });
-        socket.addEventListener('message', function (event) {
-            var parse = JSON.parse(event.data);
-            build(parse.emojis);
-            displayContinue(parse.new_emojis);
-        });
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Real Twitter Time Emoji</title>
+    <link rel="stylesheet" href="emoji.css" type="text/css">
 </head>
-
 <body>
-    <h1>Most Used Emojis in France</h1>
-    <div class="emoji-list-continue">
-
+    <h1>Real Twitter Time Emoji</h1>
+    <div class="panel">
+        <h2>Since you are in this page...</h2>
+        <h3>Tweet-user leaderboard</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>User</th>
+                <th>Emoji Used</th>
+            </tr>
+            </thead>
+            <tbody class="leaderboard-user">
+            </tbody>
+        </table>
+        <h3>Use-moji leaderboard</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Emoji</th>
+                <th>Uses</th>
+            </tr>
+            </thead>
+            <tbody class="leaderboard-emoji">
+            </tbody>
+        </table>
     </div>
-    <table>
-        <thead>
-        <tr>
-            <th>Emoji</th>
-            <th>Uses</th>
-        </tr>
-        </thead>
-        <tbody class="list-emojis">
-        </tbody>
-    </table>
+    <div class="emoji-last"></div>
+    <div class="emoji-list-continue"></div>
+    <div class="tweet_name"></div>
 </body>
 
 <script src="build_table.js"></script>
